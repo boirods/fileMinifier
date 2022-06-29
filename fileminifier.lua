@@ -60,18 +60,32 @@ end
 
 function removeSingleLineComments(linha)
 	local padrao = {"//", "#"}
-	if string.find(linha, padrao[1]) ~= nil then
-		--testa //
-		local inicio, fim = string.find(linha, padrao[1])
-		linha = string.sub(linha, 1, inicio - 1)
-		return linha
+	local posicaoBarraBarra=0
+	if string.find(linha, padrao[1]) then
+		posicaoBarraBarra = string.find(linha, padrao[1])
+
+		if temDoisPontosAntesBarraBarra(linha, posicaoBarraBarra) then
+			return linha
+		else 
+			--testa //
+			local inicio, fim = string.find(linha, padrao[1])
+			linha = string.sub(linha, 1, inicio - 1)
+			return linha
+		end
 	elseif string.find(linha, padrao[2]) ~= nil then
-		--testa //
+		--testa #
 		local inicio, fim = string.find(linha, padrao[2])
 		linha = string.sub(linha, 1, inicio - 1)
 		return linha
 	else
 		return linha
+	end
+end
+
+function temDoisPontosAntesBarraBarra(linha, posicaoBarraBarra)
+	local posicaoDoisPontos = string.find(linha, ':')
+	if posicaoDoisPontos == (posicaoBarraBarra - 1) then
+		return true
 	end
 end
 
