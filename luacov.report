@@ -1,0 +1,137 @@
+==============================================================================
+fileminifier.lua
+==============================================================================
+  2 local io = require('io')
+
+
+  2 function exibeMensagemInicial(arquivo)
+  2 	print("---------------------------")
+  2 	print("- Minimizador de arquivos -")
+  2 	print("---------------------------")
+  2 	if arquivo == nil then
+  2 		print('Digite o caminho completo do arquivo que você deseja minimizar:')
+  2 		arquivo=io.read()
+    	end
+  2 	return arquivo
+    end
+
+  2 function removeHtmlComments(textoDoArquivoMinificado)
+  2 	local padrao = {"<!--", "%-%->"} --se a string desejada der errado tente colocando o caractere % na frente dos caracteres ignorados
+  2 	local possuiComentarios = true
+  9 	while possuiComentarios do
+  9 		local inicioComentario = {}
+  9 		inicioComentario = string.find(textoDoArquivoMinificado, padrao[1])
+  9 		local fimComentario = {}
+  9 		fimComentario = string.find(textoDoArquivoMinificado, padrao[2])
+  9 		if inicioComentario ~= nil and fimComentario ~= nil then
+  7 			possuiComentarios = true
+    		else
+  2 			return textoDoArquivoMinificado
+    		end
+  7 		local inicioComentario, teste = string.find(textoDoArquivoMinificado, padrao[1]) -- saber onde inicia o comentário
+  7 		local teste, fimComentario = string.find(textoDoArquivoMinificado, padrao[2])    -- saber onde termina o comentário
+
+  7 		local inicioTexto = string.sub(textoDoArquivoMinificado, 1, inicioComentario - 1)                            -- pega o inicio do texto até antes de iniciar o comentário
+  7 		local fimTexto = string.sub(textoDoArquivoMinificado, fimComentario + 1, string.len(textoDoArquivoMinificado)) -- pega o fim do texto de onde termina o comentário até o fim do código
+
+  7 		textoDoArquivoMinificado = inicioTexto.. fimTexto
+    	end
+    end
+
+  2 function removeJavaMultipleLineComments(textoDoArquivoMinificado)
+  2 	local padrao = {"/%*", "%*/"}
+  2 	local possuiComentarios = true
+  4 	while possuiComentarios do
+  4 		local inicioComentario = {}
+  4 		inicioComentario = string.find(textoDoArquivoMinificado, padrao[1])
+  4 		local fimComentario = {}
+  4 		fimComentario = string.find(textoDoArquivoMinificado, padrao[2])
+  4 		if inicioComentario ~= nil and fimComentario ~= nil then
+  2 			possuiComentarios = true
+    		else
+  2 			return textoDoArquivoMinificado
+    		end
+  2 		local inicioComentario, teste = string.find(textoDoArquivoMinificado, padrao[1])
+  2 		local teste, fimComentario = string.find(textoDoArquivoMinificado, padrao[2])
+
+  2 		local inicioTexto = string.sub(textoDoArquivoMinificado, 1, inicioComentario -1)
+  2 		local fimTexto = string.sub(textoDoArquivoMinificado, fimComentario + 1, string.len(textoDoArquivoMinificado))
+
+  2 		textoDoArquivoMinificado = inicioTexto.. fimTexto
+    	end
+    end
+
+  2 function removeSingleLineComments(linha)
+ 70 	local padrao = {"//", "#"}
+ 70 	local posicaoBarraBarra=0
+ 70 	if string.find(linha, padrao[1]) then
+  6 		posicaoBarraBarra = string.find(linha, padrao[1])
+
+  6 		if temDoisPontosAntesBarraBarra(linha, posicaoBarraBarra) then
+  2 			return linha
+    		else 
+    			--testa //
+  4 			local inicio, fim = string.find(linha, padrao[1])
+  4 			linha = string.sub(linha, 1, inicio - 1)
+  4 			return linha
+    		end
+ 64 	elseif string.find(linha, padrao[2]) ~= nil then
+    		--testa #
+  2 		local inicio, fim = string.find(linha, padrao[2])
+  2 		linha = string.sub(linha, 1, inicio - 1)
+  2 		return linha
+    	else
+ 62 		return linha
+    	end
+    end
+
+  2 function temDoisPontosAntesBarraBarra(linha, posicaoBarraBarra)
+  6 	local posicaoDoisPontos = string.find(linha, ':')
+  6 	if posicaoDoisPontos == (posicaoBarraBarra - 1) then
+  2 		return true
+    	end
+    end
+
+  2 function minificaArquivo(arquivo)
+  2 	local primeiraLinha = ''
+ 72 	for linha in io.lines(arquivo) do
+    		--remove \t (tabulações na linha)
+ 70 		linha = string.gsub(linha, "\t+","")
+    		--[[ Colocar abaixo removedores de comentários que devem ser feitos durante a remoção de tabulações (\t) --]]
+ 70 		linha = removeSingleLineComments(linha)
+    		--[[ Fim de removedores de comentários]]
+ 70 		primeiraLinha = primeiraLinha .. linha
+    	end
+    	--[[ Colocar abaixo removedores de comentários que possuem caracteres que iniciam e terminam de modos diferentes, como comentários de html e de java com multiplas linhas --]]
+  2 	primeiraLinha = removeHtmlComments(primeiraLinha)
+  2 	primeiraLinha = removeJavaMultipleLineComments(primeiraLinha)
+    	--[[ fim de removedores de comentários]]
+  2 	return primeiraLinha
+    end
+
+  2 function geraESalvaArquivoMinificado(primeiraLinha)
+  2 	local novoArquivo = arquivo..'.min'
+  2 	print("\n\nO arquivo foi salvo em: ".. novoArquivo)
+  2 	return novoArquivo, primeiraLinha
+    end
+
+  2 function salvaArquivo(caminho, primeiraLinha)
+  2 	arquivo = io.open(caminho, 'w+')
+  2 	arquivo:write(primeiraLinha)
+  2 	arquivo:flush()
+  2 	arquivo:close()
+    end
+
+  2 arquivo = exibeMensagemInicial()
+  2 minificado = minificaArquivo(arquivo) --chamar para minificar os comentários de html nesta função
+  2 salvaArquivo(geraESalvaArquivoMinificado(minificado))
+
+==============================================================================
+Summary
+==============================================================================
+
+File             Hits Missed Coverage
+-------------------------------------
+fileminifier.lua 81   0      100.00%
+-------------------------------------
+Total            81   0      100.00%

@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><strong>fileminifier</strong></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>fileminifier</code></h1>
+<p>Script feito em linguagem lua para realizar a redução de arquivos de código fonte de linguagens variadas.</p>
+<p></p>
+    <h3>Info:</h3>
+    <ul>
+        <li><strong>Copyright</strong>: boirods</li>
+        <li><strong>License</strong>: MIT</li>
+        <li><strong>Author</strong>: Rodrigo Régio de Araújo</li>
+    </ul>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#exibeMensagemInicial">exibeMensagemInicial (arquivo)</a></td>
+	<td class="summary">Função exibeMensagemInicial
+ Função para exibição da mensagem inicial</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#removeHtmlComments">removeHtmlComments (textoDoArquivoMinificado)</a></td>
+	<td class="summary">Função removeHtmlComments
+ Função que remove comentários de códigos html</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#removeJavaMultipleLineComments">removeJavaMultipleLineComments (textoDoArquivoMinificado)</a></td>
+	<td class="summary">Função removeJavaMultipleLineComments
+ Remove comentários de multiplas linhas baseado na linguagem java (que começam e terminam com  /* e */)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#removeSingleLineComments">removeSingleLineComments (linha)</a></td>
+	<td class="summary">Função removeSingleLineComments
+ Função que remove comentários de linha unica</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#temDoisPontosAntesBarraBarra">temDoisPontosAntesBarraBarra (linha, posicaoBarraBarra)</a></td>
+	<td class="summary">Função temDoisPontosAntesBarraBarra
+ Função que checa se o comentário // não é de um link (se for de um link não deve ser removido)</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#minificaArquivo">minificaArquivo (arquivo)</a></td>
+	<td class="summary">Função "principal" pois é ela que chama algumas das outras funções e inicia a remoção de tabulações e quebras de linha</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#geraESalvaArquivoMinificado">geraESalvaArquivoMinificado (primeiraLinha)</a></td>
+	<td class="summary">Função que gera um novo arquivo com a extensão .min</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#salvaArquivo">salvaArquivo (caminho, primeiraLinha)</a></td>
+	<td class="summary">Função que salva o arquivo gerado no caminho e nome informados</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "exibeMensagemInicial"></a>
+    <strong>exibeMensagemInicial (arquivo)</strong>
+    </dt>
+    <dd>
+    Função exibeMensagemInicial
+ Função para exibição da mensagem inicial
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">arquivo</span>
+         string com o nome e caminho do arquivo a ser reduzido (este parâmetro pode ser nil, e se for será solicitado)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        nome do arquivo (ou informado ou passado como parâmetro)
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "removeHtmlComments"></a>
+    <strong>removeHtmlComments (textoDoArquivoMinificado)</strong>
+    </dt>
+    <dd>
+    Função removeHtmlComments
+ Função que remove comentários de códigos html
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">textoDoArquivoMinificado</span>
+         é o texto do arquivo já reduzido
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        textoDoArquivoMinificado é o texto do arquivo já reduzido
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "removeJavaMultipleLineComments"></a>
+    <strong>removeJavaMultipleLineComments (textoDoArquivoMinificado)</strong>
+    </dt>
+    <dd>
+    Função removeJavaMultipleLineComments
+ Remove comentários de multiplas linhas baseado na linguagem java (que começam e terminam com  /* e */)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">textoDoArquivoMinificado</span>
+         é o texto do arquivo já reduzido
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        textoDoArquivoMinificado é o texto do arquivo já reduzido
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "removeSingleLineComments"></a>
+    <strong>removeSingleLineComments (linha)</strong>
+    </dt>
+    <dd>
+    Função removeSingleLineComments
+ Função que remove comentários de linha unica
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">linha</span>
+         é a linha que poderá ter comentários de linha unica como // ou #
+ return linha já com os comentários removidos
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "temDoisPontosAntesBarraBarra"></a>
+    <strong>temDoisPontosAntesBarraBarra (linha, posicaoBarraBarra)</strong>
+    </dt>
+    <dd>
+    Função temDoisPontosAntesBarraBarra
+ Função que checa se o comentário // não é de um link (se for de um link não deve ser removido)
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">linha</span>
+         a linha a ser verificada se possui o caractere : antes do //
+        </li>
+        <li><span class="parameter">posicaoBarraBarra</span>
+         é a posição do //
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        true ou false
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "minificaArquivo"></a>
+    <strong>minificaArquivo (arquivo)</strong>
+    </dt>
+    <dd>
+    Função "principal" pois é ela que chama algumas das outras funções e inicia a remoção de tabulações e quebras de linha
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">arquivo</span>
+         é o caminho e nome do arquivo a ser reduzido
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        primeiraLinha que é o arquivo reduzido e em somente uma linha
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "geraESalvaArquivoMinificado"></a>
+    <strong>geraESalvaArquivoMinificado (primeiraLinha)</strong>
+    </dt>
+    <dd>
+    Função que gera um novo arquivo com a extensão .min
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">primeiraLinha</span>
+         que é o arquivo já minificado e em somente uma linha
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        novoArquivo é o nome do novo arquivo com a extensão .min, e primeiraLinha já explicado anteriormente
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "salvaArquivo"></a>
+    <strong>salvaArquivo (caminho, primeiraLinha)</strong>
+    </dt>
+    <dd>
+    Função que salva o arquivo gerado no caminho e nome informados
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">caminho</span>
+         é o caminho e nome do arquivo já com a extensão .min
+        </li>
+        <li><span class="parameter">primeiraLinha</span>
+         a ser salva no arquivo
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2022-06-29 20:59:24 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>
